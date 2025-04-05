@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  type: NodePort
+  selector:
+    flask: deploy
+  ports:
+    - protocol: TCP
+      nodePort: 30009
+      port: 80
+      targetPort: 5000    

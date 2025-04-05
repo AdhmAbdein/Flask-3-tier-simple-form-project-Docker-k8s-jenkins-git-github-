@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deploy
+  labels:
+    flask: deploy  
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      flask: deploy
+  template:
+    metadata:
+      name: flask-pod
+      labels:
+        flask: deploy
+    spec:
+      containers:
+        - name: flask-cont
+          image: adhmabdein/myflaskimg2
+          ports:
+            - containerPort: 5000
+          env:
+            - name: POSTGRES_USER
+              value: "adham"
+            - name: POSTGRES_PASSWORD
+              value: "1234"
+            - name: POSTGRES_DB
+              value: "devopsDB"
+            - name: POSTGRES_HOST
+              value: "postgres-service"  
+
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+      
